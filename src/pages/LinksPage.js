@@ -16,16 +16,16 @@ const StyledLinksPage = styled.div`
   
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 `;
 
 const Heading = styled.h1`
-  font-size: clamp(3rem, 5vw, 7vw);
+  font-size: clamp(3rem, 4vw, 6vw);
   color: dodgerblue;
   font-weight: 700;
-  margin: 0;
-  padding:0;
+  margin: 0 0 0 10px;
+  padding: 0;
   
   user-select: none;  /* supported by Chrome and Opera */
   -webkit-user-select: none;  /* Safari */
