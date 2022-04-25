@@ -22,6 +22,18 @@ export class Map extends React.Component {
             maxZoom: 20,
             maxNativeZoom: 17,
         }).addTo(this.map);
+
+    /*
+        (this.map).on('click',
+         	function(e){
+         		var coord = e.latlng.toString().split(',');
+         		var lat = coord[0].split('(');
+         		var lng = coord[1].split(')');
+         		alert("You clicked the map at LAT: " + lat[1] + " and LONG: " + lng[0]);
+         		L.marker([lat, lng]).addTo(this.map);
+         	});
+
+    */
     }
 
     render(){
@@ -62,6 +74,7 @@ const CurrentMapPage = () => {
     return (
         <StyledCurrentMapPage>
             <Heading>Present Climate Map</Heading>
+            <HLine />
             {/*<Paragraph>Here we will present a map of the current climate using the Windy API integration.</Paragraph>*/}
 
             <Map />
@@ -98,6 +111,11 @@ const Heading = styled.h1`
   -webkit-user-select: none;  /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none;  /* Internet Explorer/Edge */
+`;
+
+const HLine = styled.hr`
+  min-height: 0.5vh;
+  width: 99.5%;
 `;
 
 const Paragraph = styled.p`

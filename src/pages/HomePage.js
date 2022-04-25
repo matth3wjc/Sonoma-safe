@@ -1,17 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaGithub } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
     return (
         <StyledHomePage>
             <Heading>Sonoma Safe</Heading>
+            <HLine noshade />
             <Paragraph>In order for us to best support your needs, please refer to the menu on the right side of the page.</Paragraph>
+            <Paragraph>Or, click the button below to sign up or login.</Paragraph>
+
+            <StyledButton to="/login">Login</StyledButton>
+
             <StyledGit />
-            <Link href="https://github.com/matth3wjc/Sonoma-safe" target = "_blank">Github</Link>
+            <HyperLink href="https://github.com/matth3wjc/Sonoma-safe" target = "_blank">Github</HyperLink>
         </StyledHomePage>
     )
 }
+
+const StyledButton = styled(Link)`
+  min-height: 3vh;
+  width: 4vw;
+  margin: 35px 0 0 0;
+
+  font: bold 20px Arial;
+  text-decoration: none;
+  text-align: center;
+  //background-color: #EEEEEE;
+  color: #333333;
+  padding: 2px 6px 2px 6px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
+  
+  background-color: dodgerblue;
+  align-self: center;
+  //justify-content: center;
+
+  user-select: none;  /* supported by Chrome and Opera */
+  -webkit-user-select: none;  /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none;  /* Internet Explorer/Edge */
+`;
 
 const StyledHomePage = styled.div`
   min-height: 100vh;
@@ -37,6 +69,11 @@ const Heading = styled.h1`
   -ms-user-select: none;  /* Internet Explorer/Edge */
 `;
 
+const HLine = styled.hr`
+  min-height: 0.5vh;
+  width: 99.5%;
+`;
+
 const Paragraph = styled.p`
   font-size: clamp(1rem, 1vw, 2vw);
   color: lightseagreen;
@@ -51,7 +88,7 @@ const Paragraph = styled.p`
   -ms-user-select: none;  /* Internet Explorer/Edge */
 `;
 
-const Link = styled.a`
+const HyperLink = styled.a`
   position: fixed;
   top: 85.5%;
   right: 86%;

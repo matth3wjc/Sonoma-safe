@@ -5,6 +5,7 @@ const PastMapPage = () => {
     return (
         <StyledPastMapPage>
             <Heading>Wildfire Risk Map</Heading>
+            <HLine />
             <Paragraph1>Here we will display a map overlayed with color based on fire risk in a particular region.</Paragraph1>
             <br />
             <Paragraph2>To calculate this risk, we will be using historical climate data from local climate stations.</Paragraph2>
@@ -34,6 +35,11 @@ const Heading = styled.h1`
   -webkit-user-select: none;  /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none;  /* Internet Explorer/Edge */
+`;
+
+const HLine = styled.hr`
+  min-height: 0.5vh;
+  width: 99.5%;
 `;
 
 const Paragraph1 = styled.p`

@@ -10,12 +10,13 @@ import HomePage from './pages/HomePage';
 import LinksPage from './pages/LinksPage';
 import PastMapPage from "./pages/PastMapPage";
 import CurrentMapPage from "./pages/CurrentMapPage";
+import AccountPage from "./pages/AccountPage";
+
+import LoginPage from "./pages/Login";
+import EmailPage from "./pages/chEmailPage";
+import PassPage from "./pages/chPassPage";
 
 function App() {
-    {/*
-  const title = "Sonoma Safe";
-    */}
-
     const [navToggled, setNavToggled] = useState(false);
 
     const handleNavToggle = () => {
@@ -24,19 +25,18 @@ function App() {
 
   return (
     <div className="App">
-        {/*
-      <header className="App-header">
-        <h1>{ title }</h1>
-      </header>
-        */}
         <Toggle handleNavToggle={handleNavToggle} />
       <Router>
           { navToggled ? <Menu handleNavToggle={handleNavToggle} /> : null }
           <Routes>
               <Route exact path="/" element = {<HomePage/>} />
+              <Route exact path="/account" element = {<AccountPage/>} />
               <Route exact path="/past" element = {<PastMapPage/>} />
               <Route exact path="/current" element = {<CurrentMapPage/>} />
               <Route exact path="/links" element = {<LinksPage/>} />
+              <Route exact path="/login" element = {<LoginPage/>} />
+              <Route exact path="/chEmail" element = {<EmailPage/>} />
+              <Route exact path="/chPass" element = {<PassPage/>} />
           </Routes>
       </Router>
     </div>
