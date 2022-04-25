@@ -22,9 +22,8 @@ function App() {
         setNavToggled(!navToggled);
     }
 
-    return (
-        <div className="App">
-            {/*
+  return (
+    <div className="App">
         {/*
       <header className="App-header">
         <h1>{ title }</h1>
@@ -40,15 +39,8 @@ function App() {
               <Route exact path="/links" element = {<LinksPage/>} />
           </Routes>
       </Router>
-        */}
-            <Router>
-                <Routes>
-                    <Route exact path="/" element = {<HomePage/>} />
-                    <Route exact path="/links" element = {<LinksPage/>} />
-                </Routes>
-            </Router>
-        </div>
-    );
+    </div>
+  );
 }
 
 export default App;
