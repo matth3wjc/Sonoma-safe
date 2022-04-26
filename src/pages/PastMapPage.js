@@ -1,14 +1,38 @@
-import React from 'react';
+import React, {Component, useMemo} from 'react';
 import styled from 'styled-components';
+import { GoogleMap, useLoadScript, Marker, useJsApiLoader } from "@react-google-maps/api";
+import {DivIcon} from "leaflet/dist/leaflet-src.esm";
+
+const mapContainerStyle = {
+    width: "100vw",
+    height: "100vh",
+};
+const center = {
+    lat: 38.43,
+    lng: -122.72
+};
 
 const PastMapPage = () => {
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: "AIzaSyAFp3eCYG4fBkiGj6bu5G3uazkfWFQ2hcw",
+    })
+
+    if (!isLoaded)
+        return <div>Loading...</div>;
+
     return (
         <StyledPastMapPage>
             <Heading>Wildfire Risk Map</Heading>
             <HLine />
-            <Paragraph1>Here we will display a map overlayed with color based on fire risk in a particular region.</Paragraph1>
-            <br />
-            <Paragraph2>To calculate this risk, we will be using historical climate data from local climate stations.</Paragraph2>
+            {/*<Paragraph1>Here we will display a map overlayed with color based on fire risk in a particular region.</Paragraph1>*/}
+
+            <GoogleMap
+                zoom={12}
+                center={center}
+                mapContainerStyle={mapContainerStyle}>
+            </GoogleMap>;
+
+            {/*<Paragraph2>To calculate this risk, we will be using historical climate data from local climate stations.</Paragraph2>*/}
         </StyledPastMapPage>
     )
 }

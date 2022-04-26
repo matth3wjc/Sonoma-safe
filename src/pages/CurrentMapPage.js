@@ -80,7 +80,6 @@ const CurrentMapPage = () => {
             <Map />
 
             {/*<Paragraph>Bottom of Map</Paragraph>*/}
-
         </StyledCurrentMapPage>
     )
 }
