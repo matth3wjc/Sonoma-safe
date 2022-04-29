@@ -1,20 +1,56 @@
-import React from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
+import API from './API_Interface/API_Interface';
 import styled from 'styled-components';
 
-function handleSubmit() {
-    // if not in database, store email and password in database
-}
+export default function LoginPage({setUser}) {
+    const [userInput, setUserInput] = useState('');
+    const [verifyUser, setVerifyUser] = useState(false);
+    const [authFailed, setAuthFailed] = useState(false);
 
-const LoginPage = () => {
+    const handleSubmit = event => {
+        console.log("handleSubmit called.");
+
+        setUserInput(event.target.value);
+        setAuthFailed(false);
+
+        if(event.key === "Enter") {
+            console.log("handleKeyPress: Verify user input.");
+            setVerifyUser(true);
+        }
+    };
+
+    useEffect(() => {
+
+        if( ! verifyUser || userInput.length === 0)
+            return;
+
+        const api = new API();
+        async function getUserInfo() {
+            api.getUserInfo(userInput)
+                .then( userInfo => {
+                    console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
+                    const user = userInfo.user;
+                    if( userInfo.status === "OK" ) {
+                        setUser(user);
+                    } else  {
+                        setVerifyUser(false);
+                        setAuthFailed(true);
+                    }
+                });
+        }
+
+        getUserInfo();
+    }, [verifyUser, setUser, userInput]);
+
     return (
         <StyledLoginPage>
             <Heading>Sonoma Safe</Heading>
             <HLine noshade />
             <Paragraph>Please Log In</Paragraph>
             <StyledDialogBox onSubmit={handleSubmit}>
-                <StyledInputBox type="email" id="email" placeholder="Email..."/>
-                <StyledInputBox type="password" id="password" placeholder="Password..."/>
-                <StyledButton type="submit" value="Login"/>
+                <StyledInputBox type="email" id="email" placeholder="Email..." error={authFailed} value={userInput}/>
+                <StyledInputBox type="password" id="password" placeholder="Password..." error={authFailed} value={userInput}/>
+                <StyledButton type="submit" value="Login" onClick={() => {setVerifyUser(true)}}/>
             </StyledDialogBox>
         </StyledLoginPage>
     )
@@ -103,5 +139,3 @@ const Paragraph = styled.p`
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none;  /* Internet Explorer/Edge */
 `;
-
-export default LoginPage;

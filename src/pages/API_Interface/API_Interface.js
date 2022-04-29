@@ -10,8 +10,8 @@ const AxiosConfigured = () => {
 const axiosAgent = AxiosConfigured();
 
 export default class APIInterface {
-    async getUserInfo(username) {
-        return axiosAgent.get(`login/${username}`)
+    async getUserInfo(email) {
+        return axiosAgent.get(`login/${email}`)
             .then(userInfo => userInfo.data)
             .catch(error => (
                 {
@@ -20,3 +20,4 @@ export default class APIInterface {
                 }));
     }
 }
+
