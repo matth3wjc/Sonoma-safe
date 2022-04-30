@@ -48,8 +48,8 @@ export default function LoginPage({setUser}) {
             <HLine noshade />
             <Paragraph>Please Log In</Paragraph>
             <StyledDialogBox onSubmit={handleSubmit}>
-                <StyledInputBox type="email" id="email" placeholder="Email..." error={authFailed} value={userInput}/>
-                <StyledInputBox type="password" id="password" placeholder="Password..." error={authFailed} value={userInput}/>
+                <StyledInputBox type="email" id="email" placeholder="Email..." error={authFailed} helperText="Only for existing users!"/>
+                <StyledInputBox type="password" id="password" placeholder="Password..." error={authFailed}/>
                 <StyledButton type="submit" value="Login" onClick={() => {setVerifyUser(true)}}/>
             </StyledDialogBox>
         </StyledLoginPage>
