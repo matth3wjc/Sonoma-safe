@@ -77,6 +77,7 @@ export class Map extends React.Component {
     }
 }
 
+
 /*
 const options = {
     // Required: API key
@@ -113,7 +114,7 @@ const CurrentMapPage = () => {
             <HLine />
             {/*<Paragraph>Here we will present a map of the current climate using the Windy API integration.</Paragraph>*/}
 
-            <Map />
+            <Map id ="map"/>
 
             {/*<Paragraph>Bottom of Map</Paragraph>*/}
         </StyledCurrentMapPage>
