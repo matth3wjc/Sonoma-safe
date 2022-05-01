@@ -34,19 +34,21 @@ const LoginController = new (require('../app/Controllers/LoginController.js'))()
 const loginRouter = require('koa-router')({
     prefix: '/login'
 });
-loginRouter.get('/:user_id', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error:", err));
-/*
-const dataController = new (require('../app/Controllers/LoginController.js'))();
+loginRouter.get('/:user_id', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error: ", err));
+
+const DataController = new (require('../app/Controllers/DataController.js'))();
 const dataRouter = require('koa-router')({
     prefix: '/data'
-});*/
+});
+dataRouter.get('/:data', DataController.fetchData, (err) => console.log("routers.js: dataRouter error: ", err))
 
 /**
  * Register all of the controllers into the default controller.
  */
 router.use(
     '',
-    loginRouter.routes()
+    loginRouter.routes(),
+    dataRouter.routes()
 );
 
 module.exports = function (app) {
