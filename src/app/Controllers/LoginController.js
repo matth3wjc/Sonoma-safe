@@ -8,7 +8,7 @@ class LoginController {
     async authorizeUser(ctx) {
         return new Promise((resolve, reject) => {
 
-	    // Right up here, you could inspect the provided uers_id to
+	    // Right up here, you could inspect the provided user_id to
 	    // make sure that it is, at the surface, a legitimate ID.
 	    // For example, if user ids are suppose to be email addresses,
 	    // you can at least make sure that user's input is consistent

@@ -4,6 +4,16 @@ import styled from 'styled-components';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
 const Wrapper = styled.div`
   width: ${props => props.width};
   height: ${props => props.height};
@@ -23,23 +33,50 @@ export class Map extends React.Component {
             maxNativeZoom: 17,
         }).addTo(this.map);
 
-    /*
-        (this.map).on('click',
-         	function(e){
-         		var coord = e.latlng.toString().split(',');
-         		var lat = coord[0].split('(');
-         		var lng = coord[1].split(')');
-         		alert("You clicked the map at LAT: " + lat[1] + " and LONG: " + lng[0]);
-         		L.marker([lat, lng]).addTo(this.map);
-         	});
 
-    */
+        var marker1 = L.marker([0, 0]);
+        var marker2 = L.marker([0, 0]);
+        var marker3 = L.marker([0, 0]);
+        let markerCount = 0;
+
+        // *************************************************************************************
+        // Stephen you can use these variables for storing the user's marker data in the database
+        let marker1lat, marker1lng, marker2lat, marker2lng, marker3lat, marker3lng;
+        // *************************************************************************************
+
+        marker1.addTo(this.map);
+        marker2.addTo(this.map);
+        marker3.addTo(this.map);
+
+        // User is allowed to add 3 markers, if attempting to add a fourth, will override the first marker.
+        this.map.on('click', function(e) {
+            if (markerCount === 0)
+            {
+                marker1.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);
+                marker1lat = e.latlng.lat;
+                marker1lng = e.latlng.lng;
+                markerCount++;
+            } else if (markerCount === 1) {
+                marker2.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);
+                marker2lat = e.latlng.lat;
+                marker2lng = e.latlng.lng;
+                markerCount++;
+            } else {
+                marker3.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);
+                marker3lat = e.latlng.lat;
+                marker3lng = e.latlng.lng;
+                markerCount = 0;
+            }
+            //console.log(`You just clicked the coordinates: ${e.latlng}`);
+        } );
+
     }
 
     render(){
         return <Wrapper width="1280px" height="720px" id="map"  />
     }
 }
+
 
 /*
 const options = {
@@ -77,7 +114,7 @@ const CurrentMapPage = () => {
             <HLine />
             {/*<Paragraph>Here we will present a map of the current climate using the Windy API integration.</Paragraph>*/}
 
-            <Map />
+            <Map id ="map"/>
 
             {/*<Paragraph>Bottom of Map</Paragraph>*/}
         </StyledCurrentMapPage>

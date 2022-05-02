@@ -1,11 +1,55 @@
 import React from 'react';
 import styled from 'styled-components';
 
+/*
+const DataController = new (require('../../app/Controllers/DataController'))();
+
+let stations = new Array();
+
+async function getStationNumbers() {
+    try {
+        let result = await DataController.fetchStationNumbers();
+        for(let s of result){
+            stations.push(s);
+        }
+    } catch(e) {
+        console.log(`Access denied or no entries found!: ${e}`);
+    }
+}
+
+async function findTemp(station) {
+    try {
+        let result = await DataController.fetchTemp(station);
+    } catch(e) {
+        console.log(`Access denied or no entries found!: ${e}`);
+    }
+}
+
+async function testDatabase(station) {
+    try {
+        let result = await DataController.fetchData(station);
+        if (result.length > 0)
+            console.log(result);
+
+    } catch (e) {
+        console.log(`The database could not be found!: ${e}`);
+    }
+}
+
+void function printTemps() {
+    for (let i=0; i < stations.length; i++)
+    {
+        console.log(`The average temperature for ${stations[i]} is: ${findTemp(stations[i])}\n`);
+    }
+}
+*/
+
 const LinksPage = () => {
     return (
         <StyledLinksPage>
             <Heading>Additonal Links</Heading>
             <HLine />
+            <button onClick="testDatabase('US1CASN0139')">test</button>
         </StyledLinksPage>
     )
 }
