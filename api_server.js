@@ -6,7 +6,7 @@ const http = require('http');
 // Load environment variables (or .env if local environment)
 require('dotenv').config();
 app.use(bodyParser());
-require('./app/Middleware/CORS.js')(app);
+require('./src/app/Middleware/CORS.js')(app);
 
 // Custom error catch for koa-jwt so that we can log the specific error message
 // when attempting to read and parse the access_token
@@ -23,7 +23,7 @@ app.use(async (ctx, next) => {
     });
 });
 
-require('./config/sonoma_safe_routes.js')(app);
+require('./src/config/sonoma_safe_routes.js')(app);
 
-const httpsServer = require('./config/ssl/ssl.js')(app.callback());
+const httpsServer = require('./src/config/ssl/ssl.js')(app.callback());
 httpsServer.listen(process.env.APP_PORT, () => console.log(`Listening on HTTPS port ${process.env.APP_PORT}`));

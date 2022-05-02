@@ -1,4 +1,4 @@
-const dbConnection = require('../../database/mySQLconnect');
+const dbConnection = require('../../../database/mySQLconnect');
 const setAccessToken = require('../../config/setAccessToken');
 
 

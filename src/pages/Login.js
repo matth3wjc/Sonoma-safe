@@ -31,8 +31,10 @@ export default function LoginPage({setUser}) {
                     console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
                     const user = userInfo.user;
                     if( userInfo.status === "OK" ) {
+                        console.log("signed in");
                         setUser(user);
                     } else  {
+                        console.log("failed");
                         setVerifyUser(false);
                         setAuthFailed(true);
                     }
