@@ -8,8 +8,8 @@ const Menu = ({handleNavToggle}) => {
         <div>
             <StyledMenu>
                 <StyledLink to="/account">Profile</StyledLink>
-                <StyledLink to="/past">Risk Map</StyledLink>
-                <StyledLink to="/current">Climate Map</StyledLink>
+                <StyledLink to="/past">Climate Map</StyledLink>
+                <StyledLink to="/current">Risk Map</StyledLink>
                 <StyledLink to="/links">Links</StyledLink>
                 <CloseToggle onClick={handleNavToggle}/>
             </StyledMenu>

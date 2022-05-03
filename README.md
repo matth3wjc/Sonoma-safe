@@ -9,3 +9,7 @@ Wildfire data aggregation application to display local climatological data. It w
 
 
 In order to run the application, you have to first run these two commands: "npm install --save react-router-dom" and "npm install --save styled-components" and "npm install --save react-icons" and "npm install --save-dev express cors"
+
+"npm i @react-google-maps/api"
+"npm install georaster-layer-for-leaflet"
+"npm install georaster"

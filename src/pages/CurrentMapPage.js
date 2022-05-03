@@ -23,7 +23,7 @@ export class Map extends React.Component {
     componentDidMount() {
         this.map = L.map('map', {
             center: [38.43, -122.72],
-            zoom: 12.5,
+            zoom: 10,
             zoomControl: false
         });
 
@@ -33,6 +33,8 @@ export class Map extends React.Component {
             maxNativeZoom: 17,
         }).addTo(this.map);
 
+        // Raster Layer Overlay - Wildfire Risk
+        var riskLayer = L.imageOverlay('riskMap.png',[[38.8851, -123.6670],[38.0902, -122.212]],{opacity:0.50}).addTo(this.map);
 
         var marker1 = L.marker([0, 0]);
         var marker2 = L.marker([0, 0]);
@@ -73,7 +75,7 @@ export class Map extends React.Component {
     }
 
     render(){
-        return <Wrapper width="1280px" height="720px" id="map"  />
+        return <Wrapper width="100%" height="90vh" id="map"  />
     }
 }
 
@@ -110,7 +112,7 @@ windyInit(options, windyAPI => {
 const CurrentMapPage = () => {
     return (
         <StyledCurrentMapPage>
-            <Heading>Present Climate Map</Heading>
+            <Heading>Wildfire Risk Map</Heading>
             <HLine />
             {/*<Paragraph>Here we will present a map of the current climate using the Windy API integration.</Paragraph>*/}
 

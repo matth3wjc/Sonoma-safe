@@ -4,8 +4,8 @@ import { GoogleMap, useLoadScript, Marker, useJsApiLoader } from "@react-google-
 import {DivIcon} from "leaflet/dist/leaflet-src.esm";
 
 const mapContainerStyle = {
-    width: "100vw",
-    height: "100vh",
+    width: "100%",
+    height: "720px",
 };
 const center = {
     lat: 38.43,
@@ -22,7 +22,7 @@ const PastMapPage = () => {
 
     return (
         <StyledPastMapPage>
-            <Heading>Wildfire Risk Map</Heading>
+            <Heading>Present Map</Heading>
             <HLine />
             {/*<Paragraph1>Here we will display a map overlayed with color based on fire risk in a particular region.</Paragraph1>*/}
 
