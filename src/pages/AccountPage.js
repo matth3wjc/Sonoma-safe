@@ -2,13 +2,53 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
 
+
+let styles = `
+    .clickedButton {
+    background-color: greenyellow;
+    color: white;
+    
+  min-height: 4.5vh;
+  width: 6vw;
+  margin: 10px 0 0 120px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  user-select: none;  /* supported by Chrome and Opera */
+  -webkit-user-select: none;  /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none;  /* Internet Explorer/Edge */
+} 
+`
+
+let styleSheet = document.createElement("style");
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
+
+
 function removeMarkers()
 {
     // add functionality either here or on CurrentMapPage.js to reset markers
     // should delete the marker coordinates from the database
+    document.getElementById('clearButton').setAttribute("class", "clickedButton");
+    document.getElementById('clearButton').setAttribute("value", "Markers cleared!");
+}
+
+function logout()
+{
+    // Need to clear the access token here
+    window.location.href = "http://localhost:3000/";
 }
 
 const AccountPage = () => {
+    /*
+    document.querySelector('#clearButton').addEventListener('click', () => {
+        document.querySelector('#clearButton').classList.add('clickedButton');
+    })
+     */
+
     return (
         <StyledAccountPage>
             <Heading>Your profile</Heading>
@@ -16,10 +56,12 @@ const AccountPage = () => {
             <Wrapper>
                 <StyledLink to="/chPass">Change password</StyledLink>
                 <StyledLink to="/chEmail">Change email</StyledLink>
-                <StyledButton type="submit" value="Clear Markers" onClick={removeMarkers()}/>
+                <StyledButton id='clearButton' type="submit" value="Clear Markers" onClick={removeMarkers}/>
+                <StyledButton type="submit" value="Logout" onClick={logout}/>
             </Wrapper>
         </StyledAccountPage>
     )
+
 }
 
 const StyledAccountPage = styled.div`
@@ -89,9 +131,9 @@ const StyledLink = styled(Link)`
 const StyledButton = styled.input`
   min-height: 4.5vh;
   width: 6vw;
-  position: absolute;
-  left: 50%;
-  margin: 10px 0 0 -60px;
+  //position: absolute;
+  //left: 50%;
+  margin: 10px 0 0 120px;
   
   display: flex;
   align-items: center;

@@ -40,7 +40,7 @@ const DataController = new (require('../app/Controllers/DataController.js'))();
 const dataRouter = require('koa-router')({
     prefix: '/data'
 });
-dataRouter.get('/:data', DataController.fetchData, (err) => console.log("routers.js: dataRouter error: ", err))
+dataRouter.get('/:station', DataController.fetchData, (err) => console.log("routers.js: dataRouter error: ", err))
 
 /**
  * Register all of the controllers into the default controller.
