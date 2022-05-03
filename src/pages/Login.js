@@ -7,8 +7,8 @@ export default function LoginPage({setUser}) {
     const [verifyUser, setVerifyUser] = useState(false);
     const [authFailed, setAuthFailed] = useState(false);
 
-    const handleSubmit = event => {
-        console.log("handleSubmit called.");
+    const handleInputChange = event => {
+        console.log("handleInputChange called.");
 
         setUserInput(event.target.value);
         setAuthFailed(false);
@@ -21,8 +21,8 @@ export default function LoginPage({setUser}) {
 
     useEffect(() => {
 
-        if( ! verifyUser || userInput.length === 0)
-            return;
+        //if( ! verifyUser || userInput.length === 0)
+        //   return;
 
         const api = new API();
         async function getUserInfo() {
@@ -49,7 +49,7 @@ export default function LoginPage({setUser}) {
             <Heading>Sonoma Safe</Heading>
             <HLine noshade />
             <Paragraph>Please Log In</Paragraph>
-            <StyledDialogBox onSubmit={handleSubmit}>
+            <StyledDialogBox onChange={handleInputChange}>
                 <StyledInputBox type="email" id="email" placeholder="Email..." error={authFailed} helperText="Only for existing users!"/>
                 <StyledInputBox type="password" id="password" placeholder="Password..." error={authFailed}/>
                 <StyledButton type="submit" value="Login" onClick={() => {setVerifyUser(true)}}/>

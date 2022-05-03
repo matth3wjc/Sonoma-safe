@@ -1,10 +1,13 @@
-const dbConnection = require('../../../database/mySQLconnect');
+const dbConnection = require('../../database/mySQLconnect');
 const setAccessToken = require('../../config/setAccessToken');
 
 
 require('dotenv').config();
 
 class LoginController {
+    constructor() {
+        console.log('Constructor of LoginController is called.');
+    }
     async authorizeUser(ctx) {
         return new Promise((resolve, reject) => {
 
