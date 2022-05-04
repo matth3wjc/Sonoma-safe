@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import API from './API_Interface/API_Interface';
 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -50,6 +51,14 @@ export class Map extends React.Component {
         marker2.addTo(this.map);
         marker3.addTo(this.map);
 
+        async function addMarker1() {
+            const api = new API();
+            const markers = await api.addmarker1(`example@gmail.com`);
+            const user = await api.getUserInfo(`example@gmail.com`);
+            console.log(`marker1lat: ${JSON.stringify(user.user.marker1lat)}`);
+            console.log(`info: ${JSON.stringify(markers)}`);
+        }
+
         // User is allowed to add 3 markers, if attempting to add a fourth, will override the first marker.
         this.map.on('click', function(e) {
             if (markerCount === 0)
@@ -57,6 +66,9 @@ export class Map extends React.Component {
                 marker1.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);
                 marker1lat = e.latlng.lat;
                 marker1lng = e.latlng.lng;
+                console.log(marker1lat);
+                console.log(marker1lng);
+                addMarker1();
                 markerCount++;
             } else if (markerCount === 1) {
                 marker2.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);

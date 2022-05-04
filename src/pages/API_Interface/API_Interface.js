@@ -19,5 +19,8 @@ export default class APIInterface {
                     user: undefined
                 }));
     }
-}
 
+    async addmarker1(email) {
+        return axiosAgent.put(`/login/${email}`);
+    }
+}

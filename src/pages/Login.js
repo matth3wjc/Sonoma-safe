@@ -21,8 +21,8 @@ export default function LoginPage({setUser}) {
 
     useEffect(() => {
 
-        if( ! verifyUser || userInput.length === 0)
-           return;
+        //if( ! verifyUser || userInput.length === 0)
+        //   return;
 
         const api = new API();
         async function getUserInfo() {
@@ -42,18 +42,15 @@ export default function LoginPage({setUser}) {
         }
 
         getUserInfo();
-        window.location.href = "http://localhost:3000/current";
     }, [verifyUser, setUser, userInput]);
-
-
 
     return (
         <StyledLoginPage>
             <Heading>Sonoma Safe</Heading>
             <HLine noshade />
             <Paragraph>Please Log In</Paragraph>
-            <StyledDialogBox>
-                <StyledInputBox type="email" id="email" placeholder="Email..." error={authFailed} value={userInput} onChange={handleInputChange} helperText="Only for existing users!"/>
+            <StyledDialogBox onChange={handleInputChange}>
+                <StyledInputBox type="email" id="email" placeholder="Email..." error={authFailed} helperText="Only for existing users!"/>
                 <StyledInputBox type="password" id="password" placeholder="Password..." error={authFailed}/>
                 <StyledButton type="submit" value="Login" onClick={() => {setVerifyUser(true)}}/>
             </StyledDialogBox>
