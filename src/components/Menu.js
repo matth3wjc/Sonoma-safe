@@ -29,7 +29,7 @@ const StyledMenu = styled.div`
     width: 18%
   }
   background-color: rgba(10,10,10,.60);
-  z-index: 99;
+  z-index: 999;
   
   display: flex;
   flex-direction: column;

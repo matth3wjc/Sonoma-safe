@@ -1,8 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import API from './API_Interface/API_Interface';
 
-function handleSubmit() {
-    // replace email in database
+
+async function handleSubmit() {
+    const api = new API();
+    await api.addUser(document.getElementById("email"));
+
+    // Have to remove based on current session, maybe store it as a session variable?
+    // unless we can get it from token which idk
+    // - Matt
+    await api.removeUser();
 }
 
 const EmailPage = () => {

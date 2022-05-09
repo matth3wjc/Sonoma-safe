@@ -23,4 +23,5 @@ const StyledToggle = styled(FaBars)`
   place-items: center;
   font-size: 2rem;
   cursor: pointer;
+  z-index: 999;
 `;

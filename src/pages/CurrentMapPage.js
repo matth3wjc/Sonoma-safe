@@ -51,11 +51,11 @@ export class Map extends React.Component {
         marker2.addTo(this.map);
         marker3.addTo(this.map);
 
-        async function addMarker1() {
+        function addMarker1(lat, lng) {
             const api = new API();
-            const markers = await api.addmarker1(`example@gmail.com`);
-            const user = await api.getUserInfo(`example@gmail.com`);
-            console.log(`marker1lat: ${JSON.stringify(user.user.marker1lat)}`);
+            const markers = api.addmarker1(lat, lng, `example@gmail.com`);
+            const user1 = api.getUserInfo(`example@gmail.com`);
+            console.log(`marker1lat: ${JSON.stringify(user1.user.marker1lat)}`);
             console.log(`info: ${JSON.stringify(markers)}`);
         }
 
@@ -68,7 +68,7 @@ export class Map extends React.Component {
                 marker1lng = e.latlng.lng;
                 console.log(marker1lat);
                 console.log(marker1lng);
-                addMarker1();
+                addMarker1(marker1lat, marker1lng);
                 markerCount++;
             } else if (markerCount === 1) {
                 marker2.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);
@@ -121,10 +121,16 @@ windyInit(options, windyAPI => {
 });
 */
 
+function updateMap(newValue)
+{
+    // do something
+}
+
 const CurrentMapPage = () => {
     return (
         <StyledCurrentMapPage>
             <Heading>Wildfire Risk Map</Heading>
+            <StyledInput type="range" min="0" max="5" onChange="updateMap(this.value)"/>
             <HLine />
             {/*<Paragraph>Here we will present a map of the current climate using the Windy API integration.</Paragraph>*/}
 
@@ -135,6 +141,11 @@ const CurrentMapPage = () => {
     )
 }
 
+const StyledInput = styled.input`
+  //position: relative;
+  width: 10vw;
+`;
+
 const StyledCurrentMapPage = styled.div`
   min-height: 100vh;
   width: 100vw;
@@ -142,8 +153,6 @@ const StyledCurrentMapPage = styled.div`
   
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
   #Map {
     width: 90%;
     height: 300px;

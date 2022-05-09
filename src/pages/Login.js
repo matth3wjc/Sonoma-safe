@@ -28,6 +28,7 @@ export default function LoginPage({setUser}) {
         async function getUserInfo() {
             api.getUserInfo(userInput)
                 .then( userInfo => {
+                    api.addUser(document.getElementById("email"));
                     console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
                     const user = userInfo.user;
                     if( userInfo.status === "OK" ) {
