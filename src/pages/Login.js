@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 export default function LoginPage({setUser}) {
     const [userInput, setUserInput] = useState('');
+    const [userPassword, setUserPassword] = useState('');
     const [verifyUser, setVerifyUser] = useState(false);
     const [authFailed, setAuthFailed] = useState(false);
 
     const handleInputChange = event => {
-        console.log("handleInputChange called.");
+        //console.log("handleInputChange called.");
 
         setUserInput(event.target.value);
         setAuthFailed(false);
@@ -19,19 +20,32 @@ export default function LoginPage({setUser}) {
         }
     };
 
+    const handlePassword = event => {
+        //console.log("handleInputChange2 called.");
+
+        setUserPassword(event.target.value);
+        setAuthFailed(false);
+
+        if(event.key === "Enter") {
+            console.log("handleKeyPress: Verify user input.");
+            setVerifyUser(true);
+        }
+    };
+
     useEffect(() => {
 
-        //if( ! verifyUser || userInput.length === 0)
-        //   return;
+        if( ! verifyUser || userInput.length === 0)
+           return;
 
         const api = new API();
         async function getUserInfo() {
-            api.getUserInfo(userInput)
+            api.getUserInfo(userInput, userPassword)
                 .then( userInfo => {
                     api.addUser(document.getElementById("email"));
                     console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
                     const user = userInfo.user;
-                    if( userInfo.status === "OK" ) {
+                    if( userInfo.status === "OK" && userInfo.user.password === userPassword) {
+                        //window.location.href = "http://localhost:3000/current";
                         console.log("signed in");
                         setUser(user);
                     } else  {
@@ -41,18 +55,18 @@ export default function LoginPage({setUser}) {
                     }
                 });
         }
-
         getUserInfo();
-    }, [verifyUser, setUser, userInput]);
+        window.location.href = "http://localhost:3000/account";
+    }, [verifyUser, setUser, userInput, userPassword]);
 
     return (
         <StyledLoginPage>
             <Heading>Sonoma Safe</Heading>
             <HLine noshade />
             <Paragraph>Please Log In</Paragraph>
-            <StyledDialogBox onChange={handleInputChange}>
-                <StyledInputBox type="email" id="email" placeholder="Email..." error={authFailed} helperText="Only for existing users!"/>
-                <StyledInputBox type="password" id="password" placeholder="Password..." error={authFailed}/>
+            <StyledDialogBox>
+                <StyledInputBox type="email" id="email" placeholder="Email..." error={authFailed} onChange={handleInputChange} value={userInput}/>
+                <StyledInputBox type="password" id="password" placeholder="Password..." error={authFailed} onChange={handlePassword} value={userPassword}/>
                 <StyledButton type="submit" value="Login" onClick={() => {setVerifyUser(true)}}/>
             </StyledDialogBox>
         </StyledLoginPage>
