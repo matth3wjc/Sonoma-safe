@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import API from './API_Interface/API_Interface';
 
@@ -37,9 +37,22 @@ export class Map extends React.Component {
         // Raster Layer Overlay - Wildfire Risk
         var riskLayer = L.imageOverlay('riskMap.png',[[38.8851, -123.6670],[38.0902, -122.212]],{opacity:0.50}).addTo(this.map);
 
-        var marker1 = L.marker([0, 0]);
-        var marker2 = L.marker([0, 0]);
-        var marker3 = L.marker([0, 0]);
+        async function initializeMarkers() {
+            const api = new API();
+            const user = await api.getUserInfo(sessionStorage.getItem('user'));
+            sessionStorage.setItem('marker1lat', user.user.marker1lat);
+            sessionStorage.setItem('marker1lng', user.user.marker1lng);
+            sessionStorage.setItem('marker2lat', user.user.marker2lat);
+            sessionStorage.setItem('marker2lng', user.user.marker2lng);
+            sessionStorage.setItem('marker3lat', user.user.marker3lat);
+            sessionStorage.setItem('marker3lng', user.user.marker3lng);
+        }
+
+        initializeMarkers();
+
+        var marker1 = L.marker([sessionStorage.getItem('marker1lat'), sessionStorage.getItem('marker1lng')]);
+        var marker2 = L.marker([sessionStorage.getItem('marker2lat'), sessionStorage.getItem('marker2lng')]);
+        var marker3 = L.marker([sessionStorage.getItem('marker3lat'), sessionStorage.getItem('marker3lng')]);
         let markerCount = 0;
 
         // *************************************************************************************
@@ -51,16 +64,10 @@ export class Map extends React.Component {
         marker2.addTo(this.map);
         marker3.addTo(this.map);
 
-        async function addMarker1(marker1lat, marker1lng) {
+        async function addMarkers(marker1lat, marker1lng, marker2lat, marker2lng, marker3lat, marker3lng) {
             const api = new API();
-            const markers = await api.addmarker1(`example@gmail.com`, marker1lat, marker1lng);
-            const user = await api.getUserInfo(`example@gmail.com`);
-            user.user.marker1lat = marker1lat;
-            user.user.marker1lng = marker1lng;
-            sessionStorage.setItem('marker1lat', marker1lat);
-            sessionStorage.setItem('marker1lng', marker1lng);
-            console.log(`marker1lat: ${JSON.stringify(user.user.marker1lat)}`);
-            console.log(`marker1lng: ${JSON.stringify(user.user.marker1lng)}`);
+            await api.addmarkers(sessionStorage.getItem('user'), marker1lat, marker1lng, marker2lat, marker2lng, marker3lat, marker3lng);
+            await api.getUserInfo(sessionStorage.getItem('user'));
         }
 
         // User is allowed to add 3 markers, if attempting to add a fourth, will override the first marker.
@@ -70,22 +77,30 @@ export class Map extends React.Component {
                 marker1.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);
                 marker1lat = e.latlng.lat;
                 marker1lng = e.latlng.lng;
-                addMarker1(marker1lat, marker1lng);
+
+                addMarkers(marker1lat, marker1lng, sessionStorage.getItem('marker2lat'), sessionStorage.getItem('marker2lng'), sessionStorage.getItem('marker3lat'), sessionStorage.getItem('marker3lng'));
+                initializeMarkers();
                 markerCount++;
             } else if (markerCount === 1) {
                 marker2.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);
                 marker2lat = e.latlng.lat;
                 marker2lng = e.latlng.lng;
+
+                addMarkers(marker1lat, marker1lng, marker2lat, marker2lng, sessionStorage.getItem('marker3lat'), sessionStorage.getItem('marker3lng'));
+                initializeMarkers();
                 markerCount++;
             } else {
                 marker3.setLatLng([e.latlng.lat, e.latlng.lng]).bindPopup(`${e.latlng.lat}, ${e.latlng.lng}`);
                 marker3lat = e.latlng.lat;
                 marker3lng = e.latlng.lng;
                 markerCount = 0;
+
+                addMarkers(marker1lat, marker1lng, marker2lat, marker2lng, marker3lat, marker3lng);
+                initializeMarkers();
             }
             //console.log(`You just clicked the coordinates: ${e.latlng}`);
+            initializeMarkers();
         } );
-
     }
 
     render(){

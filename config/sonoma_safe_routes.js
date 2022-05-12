@@ -35,7 +35,8 @@ const loginRouter = require('koa-router')({
 });
 loginRouter.get('/:email', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error: ", err));
 //loginRouter.put('/save/:email', LoginController.addUser, (err) => console.log("routers.js: loginRouter error: ", err))
-loginRouter.put('/:email', LoginController.storeMarker1, (err) => console.log("routers.js: loginRouter error: ", err))
+//loginRouter.put('/:email', LoginController.deleteMarkers, (err) => console.log("routers.js: loginRouter error: ", err));
+loginRouter.put('/:email/:marker1lat/:marker1lng/:marker2lat/:marker2lng/:marker3lat/:marker3lng', LoginController.storeMarkers, (err) => console.log("routers.js: loginRouter error: ", err));
 //loginRouter.put('/remove/:email', LoginController.removeUser, (err) => console.log("routers.js: loginRouter error: ", err))
 const DataController = new (require('../app/Controllers/DataController.js'))();
 const dataRouter = require('koa-router')({

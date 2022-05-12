@@ -53,25 +53,14 @@ class LoginController {
 
     }
 
-    async storeMarker1(ctx) {
+    async storeMarkers(ctx) {
         return new Promise((resolve, reject) => {
 
-            const users = ctx.request.body;
-
-            if(typeof window !== 'undefined') {
-                users.marker1lat = sessionStorage.getItem('marker1lat');
-            }
-            users.marker1lat = 10;
-            users.marker1lng = 20;
-            //users.marker1lat = sessionStorage.getItem('marker1lat');
-            //console.log(sessionStorage.getItem('marker1lat'));
-            console.log(users.marker1lat);
-
-            let query = `UPDATE users SET marker1lat = ?, marker1lng = ? WHERE email = ?;`
+            let query = `UPDATE users SET marker1lat = ?, marker1lng = ?, marker2lat = ?, marker2lng = ?, marker3lat = ?, marker3lng = ? WHERE email = ?;`
             dbConnection.query(
                 {
                     sql: query,
-                    values: [users.marker1lat, users.marker1lng, ctx.params.email]
+                    values: [ctx.params.marker1lat, ctx.params.marker1lng, ctx.params.marker2lat, ctx.params.marker2lng, ctx.params.marker3lat, ctx.params.marker3lng, ctx.params.email]
                 }, (error, tuples) => {
                     if (error) {
                         console.log("Query error.", error);
@@ -85,14 +74,12 @@ class LoginController {
                             user: tuples[0],
                         };
                     } else {
-                        console.log('Not able to identify the user.');
-                        return reject('No such user.');
+                        return reject();
                     }
                     return resolve();
                 }
             )
         }).catch(err => {
-            console.log('authorize in LoginController threw an exception. Reason...', err);
             ctx.status = 200;
             ctx.body = {
                 status: "Failed",
@@ -100,7 +87,6 @@ class LoginController {
                 user: null
             };
         });
-
     }
 
 }

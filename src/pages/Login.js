@@ -43,9 +43,9 @@ export default function LoginPage({setUser}) {
                 .then( userInfo => {
                     api.addUser(document.getElementById("email"));
                     console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
+                    sessionStorage.setItem('user', userInput);
                     const user = userInfo.user;
                     if( userInfo.status === "OK" && userInfo.user.password === userPassword) {
-                        //window.location.href = "http://localhost:3000/current";
                         console.log("signed in");
                         setUser(user);
                     } else  {

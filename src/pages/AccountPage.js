@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
+import API from "./API_Interface/API_Interface";
 
 
 let styles = `
@@ -32,6 +33,11 @@ function removeMarkers()
 {
     // add functionality either here or on CurrentMapPage.js to reset markers
     // should delete the marker coordinates from the database
+    async function deleteMarkers() {
+        const api = new API();
+        await api.addmarkers(sessionStorage.getItem('user'), 0, 0, 0, 0, 0, 0);
+    }
+    deleteMarkers();
     document.getElementById('clearButton').setAttribute("class", "clickedButton");
     document.getElementById('clearButton').setAttribute("value", "Markers cleared!");
 }

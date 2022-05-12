@@ -20,8 +20,8 @@ export default class APIInterface {
                 }));
     }
 
-    async addmarker1(email, lat, lng) {
-        return axiosAgent.put(`/login/${email}`);
+    async addmarkers(email, m1lat, m1lng, m2lat, m2lng, m3lat, m3lng) {
+        return axiosAgent.put(`/login/${email}/${m1lat}/${m1lng}/${m2lat}/${m2lng}/${m3lat}/${m3lng}`);
     }
 
     addUser(email) {
