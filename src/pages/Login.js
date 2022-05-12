@@ -41,15 +41,16 @@ export default function LoginPage({setUser}) {
         async function getUserInfo() {
             api.getUserInfo(userInput, userPassword)
                 .then( userInfo => {
-                    api.addUser(document.getElementById("email"));
                     console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
                     sessionStorage.setItem('user', userInput);
+                    sessionStorage.setItem('userPassword', userPassword);
                     const user = userInfo.user;
                     if( userInfo.status === "OK" && userInfo.user.password === userPassword) {
                         console.log("signed in");
                         setUser(user);
                     } else  {
-                        console.log("failed");
+                        api.addUser(userInput, userPassword);
+                        console.log("new account created");
                         setVerifyUser(false);
                         setAuthFailed(true);
                     }

@@ -33,8 +33,9 @@ const LoginController = new (require('../app/Controllers/LoginController.js'))()
 const loginRouter = require('koa-router')({
     prefix: '/login'
 });
-loginRouter.get('/:email', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error: ", err));
-//loginRouter.put('/save/:email', LoginController.addUser, (err) => console.log("routers.js: loginRouter error: ", err))
+loginRouter.get('/:email/:password', LoginController.authorizeUser, (err) => console.log("routers.js: loginRouter error: ", err));
+loginRouter.post('/:email', LoginController.addUser);
+loginRouter.put('/:email/:password/:newPassword', LoginController.changePassword);
 //loginRouter.put('/:email', LoginController.deleteMarkers, (err) => console.log("routers.js: loginRouter error: ", err));
 loginRouter.put('/:email/:marker1lat/:marker1lng/:marker2lat/:marker2lng/:marker3lat/:marker3lng', LoginController.storeMarkers, (err) => console.log("routers.js: loginRouter error: ", err));
 //loginRouter.put('/remove/:email', LoginController.removeUser, (err) => console.log("routers.js: loginRouter error: ", err))

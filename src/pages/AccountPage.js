@@ -28,7 +28,6 @@ let styleSheet = document.createElement("style");
 styleSheet.innerText = styles;
 document.head.appendChild(styleSheet);
 
-
 function removeMarkers()
 {
     // add functionality either here or on CurrentMapPage.js to reset markers

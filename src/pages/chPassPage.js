@@ -1,18 +1,39 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
+import API from "./API_Interface/API_Interface";
 
-function handleSubmit() {
-    // replace password in database
-}
+
+
 
 const PassPage = () => {
+    const [newPassword, setNewPassword] = useState('');
+    const [verifyUser, setVerifyUser] = useState(false);
+
+    const handleSubmit = event => {
+        // replace password in database
+        setNewPassword(event.target.value);
+
+        if(event.key === "Enter") {
+            console.log("handleKeyPress: Verify user input.");
+            setVerifyUser(true);
+        }
+
+        //if( ! verifyUser || newPassword.length === 0)
+           // return;
+
+        async function changePassword() {
+            const api = new API();
+            await api.changepassword(sessionStorage.getItem('user'), sessionStorage.getItem('userPassword'), newPassword);
+        }
+        changePassword();
+    }
     return (
         <StyledChangePasswordPage>
             <Heading>Sonoma Safe</Heading>
             <HLine noshade />
             <Paragraph>Please Enter A New Password</Paragraph>
-            <StyledDialogBox onSubmit={handleSubmit}>
-                <StyledInputBox type="password" id="password" placeholder="New password..."/>
+            <StyledDialogBox>
+                <StyledInputBox type="password" id="password" placeholder="New password..." value={newPassword} onChange={handleSubmit}/>
                 <StyledButton type="submit" value="Change Password"/>
             </StyledDialogBox>
         </StyledChangePasswordPage>

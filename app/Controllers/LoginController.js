@@ -17,11 +17,11 @@ class LoginController {
 	    // you can at least make sure that user's input is consistent
 	    // with the format of email addresses. 
 	    
-            let query = "SELECT * FROM users WHERE email = ?";
+            let query = "SELECT * FROM users WHERE email = ? && password = ?";
             dbConnection.query(
                 {
                     sql: query,
-                    values: [ctx.params.email]
+                    values: [ctx.params.email, ctx.params.password]
                 }, (error, tuples) => {
                     if (error) {
                         console.log("Query error.", error);
@@ -61,6 +61,79 @@ class LoginController {
                 {
                     sql: query,
                     values: [ctx.params.marker1lat, ctx.params.marker1lng, ctx.params.marker2lat, ctx.params.marker2lng, ctx.params.marker3lat, ctx.params.marker3lng, ctx.params.email]
+                }, (error, tuples) => {
+                    if (error) {
+                        console.log("Query error.", error);
+                        return reject(`Query error. Error msg: error`);
+                    }
+                    if (tuples.length === 1) {  // Did we have a matching user record?
+                        setAccessToken(ctx, tuples[0]);
+                        console.log('from studentRecord. About to return ', tuples[0]);
+                        ctx.body = {
+                            status: "OK",
+                            user: tuples[0],
+                        };
+                    } else {
+                        return reject();
+                    }
+                    return resolve();
+                }
+            )
+        }).catch(err => {
+            ctx.status = 200;
+            ctx.body = {
+                status: "Failed",
+                error: err,
+                user: null
+            };
+        });
+    }
+
+    async changePassword(ctx) {
+        return new Promise((resolve, reject) => {
+
+            let query = `UPDATE users SET password = ? WHERE email = ?;`
+            dbConnection.query(
+                {
+                    sql: query,
+                    values: [ctx.params.password, ctx.params.email]
+                }, (error, tuples) => {
+                    if (error) {
+                        console.log("Query error.", error);
+                        return reject(`Query error. Error msg: error`);
+                    }
+                    if (tuples.length === 1) {  // Did we have a matching user record?
+                        setAccessToken(ctx, tuples[0]);
+                        console.log('from studentRecord. About to return ', tuples[0]);
+                        ctx.body = {
+                            status: "OK",
+                            user: tuples[0],
+                        };
+                    } else {
+                        return reject();
+                    }
+                    return resolve();
+                }
+            )
+        }).catch(err => {
+            ctx.status = 200;
+            ctx.body = {
+                status: "Failed",
+                error: err,
+                user: null
+            };
+        });
+    }
+
+    async addUser(ctx) {
+        return new Promise((resolve, reject) => {
+
+            console.log(ctx.params.email);
+            let query = `INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?);`
+            dbConnection.query(
+                {
+                    sql: query,
+                    values: [ctx.params.email, ctx.params.password, ctx.params.marker1lat, ctx.params.marker1lng, ctx.params.marker2lat, ctx.params.marker2lng, ctx.params.marker3lat, ctx.params.marker3lng]
                 }, (error, tuples) => {
                     if (error) {
                         console.log("Query error.", error);

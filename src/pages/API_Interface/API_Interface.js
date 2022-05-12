@@ -10,8 +10,8 @@ const AxiosConfigured = () => {
 const axiosAgent = AxiosConfigured();
 
 export default class APIInterface {
-    async getUserInfo(email) {
-        return axiosAgent.get(`login/${email}`)
+    async getUserInfo(email, password) {
+        return axiosAgent.get(`login/${email}/${password}`)
             .then(userInfo => userInfo.data)
             .catch(error => (
                 {
@@ -24,8 +24,12 @@ export default class APIInterface {
         return axiosAgent.put(`/login/${email}/${m1lat}/${m1lng}/${m2lat}/${m2lng}/${m3lat}/${m3lng}`);
     }
 
-    addUser(email) {
-        return axiosAgent.put(`/login/save/${email}`);
+    async changepassword(email, password, newPassword) {
+        return axiosAgent.put(`/login/${email}/${password}/${newPassword}`);
+    }
+
+    addUser(email, password) {
+        return axiosAgent.post(`/login/${email}/${password}`);
     }
 
     removeUser(email) {

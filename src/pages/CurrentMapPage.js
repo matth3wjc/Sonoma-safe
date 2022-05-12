@@ -39,7 +39,7 @@ export class Map extends React.Component {
 
         async function initializeMarkers() {
             const api = new API();
-            const user = await api.getUserInfo(sessionStorage.getItem('user'));
+            const user = await api.getUserInfo(sessionStorage.getItem('user'), sessionStorage.getItem('userPassword'));
             sessionStorage.setItem('marker1lat', user.user.marker1lat);
             sessionStorage.setItem('marker1lng', user.user.marker1lng);
             sessionStorage.setItem('marker2lat', user.user.marker2lat);
@@ -67,7 +67,7 @@ export class Map extends React.Component {
         async function addMarkers(marker1lat, marker1lng, marker2lat, marker2lng, marker3lat, marker3lng) {
             const api = new API();
             await api.addmarkers(sessionStorage.getItem('user'), marker1lat, marker1lng, marker2lat, marker2lng, marker3lat, marker3lng);
-            await api.getUserInfo(sessionStorage.getItem('user'));
+            await api.getUserInfo(sessionStorage.getItem('user'), sessionStorage.getItem('userPassword'));
         }
 
         // User is allowed to add 3 markers, if attempting to add a fourth, will override the first marker.
